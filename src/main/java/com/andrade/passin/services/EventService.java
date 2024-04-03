@@ -2,7 +2,10 @@ package com.andrade.passin.services;
 
 import com.andrade.passin.domain.attendee.Attendee;
 import com.andrade.passin.domain.event.Event;
+import com.andrade.passin.domain.event.excepions.EventFullException;
 import com.andrade.passin.domain.event.excepions.EventNotFoundException;
+import com.andrade.passin.dto.attendee.AttendeeIdDTO;
+import com.andrade.passin.dto.attendee.AttendeeRequestDTO;
 import com.andrade.passin.dto.event.EventIdDTO;
 import com.andrade.passin.dto.event.EventRequestDTO;
 import com.andrade.passin.dto.event.EventResponseDTO;
@@ -11,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,8 +24,7 @@ public class EventService {
   private final AttendeeService attendeeService;
 
   public EventResponseDTO getEventDescription(String eventId) {
-    Event event = this.eventRepository.findById(eventId).orElseThrow(
-            () -> new EventNotFoundException("Event not found with Id: " + eventId + "\""));
+    Event event = this.getEvent(eventId);
     List<Attendee> attendees = this.attendeeService.getAllAttendeesForEvent(eventId);
     return new EventResponseDTO(event, attendees.size());
   }
@@ -46,4 +49,27 @@ public class EventService {
             .toLowerCase();
   }
 
+  public AttendeeIdDTO registerAttendeeOnEvent(String eventId, AttendeeRequestDTO attendee) {
+    this.attendeeService.verifyAttendeeSubscription(attendee.email(), eventId);
+
+    Event event = this.getEvent(eventId);
+    List<Attendee> attendees = this.attendeeService.getAllAttendeesForEvent(eventId);
+
+    if (attendees.size() >= event.getMaximumAttendees()) {
+      throw new EventFullException("Maximum number of attendees reached");
+    }
+
+    Attendee newAttendee = new Attendee();
+    newAttendee.setName(attendee.name());
+    newAttendee.setEmail(attendee.email());
+    newAttendee.setEvent(event);
+    newAttendee.setCreatedAt(LocalDateTime.now());
+
+    this.attendeeService.registerAttendee(newAttendee);
+    return new AttendeeIdDTO(newAttendee.getId());
+  }
+  private Event getEvent(String eventId) {
+    return this.eventRepository.findById(eventId).orElseThrow(
+            () -> new EventNotFoundException("Event not found with Id: " + eventId + "\""));
+  }
 }
