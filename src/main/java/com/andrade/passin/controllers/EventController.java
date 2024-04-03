@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventController {
+  
   private final EventService eventService;
   private final AttendeeService attendeeService;
 

@@ -1,6 +1,7 @@
 package com.andrade.passin.services;
 
 import com.andrade.passin.domain.attendee.Attendee;
+import com.andrade.passin.domain.attendee.exceptions.AttendeeAlreadyRegisteredException;
 import com.andrade.passin.domain.checkIn.CheckIn;
 import com.andrade.passin.dto.attendee.AttendeeDetails;
 import com.andrade.passin.dto.attendee.AttendeesListResponseDTO;
@@ -38,6 +39,17 @@ public class AttendeeService {
                       checkInAt);
             }).toList();
     return new AttendeesListResponseDTO(attendeeDetails);
+  }
+
+  public void verifyAttendeeSubscription(String attendeeEmail, String eventId) {
+    Optional<Attendee> attendee = this.attendeeRepository.findByEventIdAndEmail(eventId, attendeeEmail);
+    if (attendee.isPresent()){
+      throw new AttendeeAlreadyRegisteredException("Attendee already registered on this event");
+    }
+  }
+
+  public Attendee registerAttendee(Attendee attendee) {
+    return this.attendeeRepository.save(attendee);
   }
 
 }
