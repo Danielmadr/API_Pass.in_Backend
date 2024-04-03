@@ -2,13 +2,17 @@ package com.andrade.passin.services;
 
 import com.andrade.passin.domain.attendee.Attendee;
 import com.andrade.passin.domain.attendee.exceptions.AttendeeAlreadyRegisteredException;
+import com.andrade.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import com.andrade.passin.domain.checkIn.CheckIn;
+import com.andrade.passin.dto.attendee.AttendeeBadgeResponseDTO;
 import com.andrade.passin.dto.attendee.AttendeeDetails;
 import com.andrade.passin.dto.attendee.AttendeesListResponseDTO;
+import com.andrade.passin.dto.attendee.AttendeeBadgeDTO;
 import com.andrade.passin.repositories.AttendeeRepository;
 import com.andrade.passin.repositories.CheckInRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,13 +47,30 @@ public class AttendeeService {
 
   public void verifyAttendeeSubscription(String attendeeEmail, String eventId) {
     Optional<Attendee> attendee = this.attendeeRepository.findByEventIdAndEmail(eventId, attendeeEmail);
-    if (attendee.isPresent()){
+    if (attendee.isPresent()) {
       throw new AttendeeAlreadyRegisteredException("Attendee already registered on this event");
     }
   }
 
-  public Attendee registerAttendee(Attendee attendee) {
-    return this.attendeeRepository.save(attendee);
+  public void registerAttendee(Attendee attendee) {
+    this.attendeeRepository.save(attendee);
   }
 
+  public AttendeeBadgeResponseDTO getAttendeeBadge(String attendeeId, UriComponentsBuilder uriBuilder) {
+    Attendee attendee = this.attendeeRepository.findById(attendeeId).orElseThrow(
+            () -> new AttendeeNotFoundException("Attendee not found with id " + attendeeId)
+    );
+
+    var uri = uriBuilder
+            .path("/attendees/{attendeeId}/check-in")
+            .buildAndExpand(attendeeId).toUri().toString();
+
+    AttendeeBadgeDTO badge = new AttendeeBadgeDTO(
+            attendee.getName(),
+            attendee.getEmail(),
+            uri,
+            attendee.getEvent().getId());
+
+    return new AttendeeBadgeResponseDTO(badge);
+  }
 }
