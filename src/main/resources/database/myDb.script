@@ -29,7 +29,7 @@ SET FILES NIO TRUE
 SET FILES NIO SIZE 256
 SET FILES LOG TRUE
 SET FILES LOG SIZE 50
-SET FILES CHECK 1103
+SET FILES CHECK 1481
 SET DATABASE COLLATION "SQL_TEXT" PAD SPACE
 CREATE USER SA PASSWORD DIGEST 'd41d8cd98f00b204e9800998ecf8427e'
 ALTER USER SA SET LOCAL TRUE
@@ -59,5 +59,9 @@ INSERT INTO "flyway_schema_history" VALUES(2,'2','create-table-attendees','SQL',
 INSERT INTO "flyway_schema_history" VALUES(3,'3','create-table-checkins','SQL','V3__create-table-checkins.sql',-2075238509,'SA','2024-04-02 10:59:00.110888',1,'1')
 INSERT INTO "flyway_schema_history" VALUES(4,'4','create-indexes','SQL','V4__create-indexes.sql',-151622747,'SA','2024-04-02 10:59:00.116893',1,'1')
 INSERT INTO EVENTS VALUES('53603457-c432-4cd6-9577-875c94161be4','Daniel Show','Melhor show da sua vida ou seu dinheiro de volta','daniel-show',1000)
+INSERT INTO EVENTS VALUES('92568705-743f-4461-9490-664b8a328f78','Daniel Teatro','Melhor show da sua vida ou seu dinheiro de volta','daniel-teatro',1)
 INSERT INTO EVENTS VALUES('d094f1a1-e518-4f2f-9411-bbd845c1ee37','Rocketseat NLW','Aprenda Java de forma Gratuita!','rocketseat-nlw',500)
+INSERT INTO ATTENDEES VALUES('114e1803-b65e-46e2-b37d-530af4654fd3','Maneurl Mauro','manulon@hotmail.com','d094f1a1-e518-4f2f-9411-bbd845c1ee37','2024-04-03 15:56:12.387728')
+INSERT INTO ATTENDEES VALUES('6c2ea2e1-ad72-437b-b50d-8bfd71af8714','Maneurl Mauro','manulon@hotmail.com','92568705-743f-4461-9490-664b8a328f78','2024-04-03 15:59:50.655626')
+INSERT INTO ATTENDEES VALUES('a8f89e83-ac14-411b-9585-564bfffaf828','Maneurl Mauro','manulin@hotmail.com','d094f1a1-e518-4f2f-9411-bbd845c1ee37','2024-04-03 15:55:19.330402')
 INSERT INTO ATTENDEES VALUES('d094f1a1-e518-4f2f-9411-bbd845c1ee37','Daniel','danielwick12@hotmail.com','d094f1a1-e518-4f2f-9411-bbd845c1ee37',NULL)
