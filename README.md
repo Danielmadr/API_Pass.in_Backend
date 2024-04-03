@@ -45,3 +45,11 @@ O **Pass.in** é uma aplicação para gerenciar participantes em eventos presenc
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+
+##Créditos
+
+Este projeto foi desenvolvido com base no tutorial oferecido pela Rocketseat durante o evento NJW Unite. Agradecemos à equipe da Rocketseat por fornecer recursos valiosos e conhecimento técnico.
+
+Instrutora responsável pelo tutorial:
+
+Fernanda Kipper
