@@ -53,3 +53,55 @@ Este projeto foi desenvolvido com base no tutorial oferecido pela Rocketseat dur
 Instrutora responsável pelo tutorial:
 
 Fernanda Kipper
+
+***
+
+# Pass.in - Participant Management for In-person Events
+
+Pass.in is an application designed to manage participants for in-person events. It allows organizers to create events, register participants, and facilitate check-in on the event day.
+
+## Features
+Event Registration:
+- Organizers can create an event.
+  
+Participant Registration:
+- Organizers can register new participants.
+- Participants can only register once for an event.
+
+Event Details View:
+- Organizers can view event details such as date, location, speakers, etc.
+
+Participant List:
+- Organizers have access to a complete list of registered participants.
+
+Registration Badge:
+- Registered participants can generate a registration badge.
+
+Event Day Check-in:
+- The system allows participants to check-in on the event day.
+- Check-in can be done using a QR code.
+
+## Business Rules
+- Participants can only register once for an event.
+- Registration is allowed only for events with available slots.
+- Check-in can only be performed once per participant.
+
+## Technologies Used
+Backend: Java with Spring Boot
+Database: HSQLDB (local)
+
+## How to Run the Project
+1. Clone this repository.
+2. Install necessary dependencies.
+3. Run the backend server.
+4. Run the frontend server.
+5. Access the application in the browser.
+
+## Contribution
+Contributions are welcome! Feel free to open issues or send pull requests.
+
+## Credits
+This project was developed based on the tutorial offered by Rocketseat during the NJW Unite event. We appreciate the Rocketseat team for providing valuable resources and technical knowledge.
+
+Tutorial Instructor:
+Fernanda Kipper
